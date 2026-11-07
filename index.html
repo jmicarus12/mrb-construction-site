@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MRB Construction Services — One-stop construction & interior works</title>
+<meta name="description" content="MRB Construction Services: one-stop construction and interior works — ceilings and lighting, cabinetry, blue reflective tempered glass, roofing, painting and finishing, stainless steel, custom signages and rattan furniture.">
+<meta name="theme-color" content="#1f2329">
+<meta property="og:title" content="MRB Construction Services">
+<meta property="og:description" content="Walk the site in 3D: ceilings, cabinetry, glass and roofing — one-stop construction and interior works.">
+<meta property="og:type" content="website">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<script>
+(function(){var r=document.documentElement;r.classList.add('js');
+ // decide before first paint whether the intro plays, so the site never flashes past it
+ var m=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches,seen=false;
+ try{seen=sessionStorage.getItem('mrb.intro')==='1';}catch(e){}
+ r.classList.add(m||seen?'intro-skip':'intro-run');
+ if(m)r.classList.add('reduced');
+})();
+</script>
+<script type="module" src="/src/main.js"></script>
+</head>
+<body>
+
+<!-- ============================================================ intro -->
+<!-- A blueprint: the house is drafted line by line, the name is stamped,
+     then the sheet rolls up and the site builds itself behind it. -->
+<div class="intro" id="intro" aria-hidden="true">
+  <div class="sheet">
+    <svg viewBox="0 0 640 360" class="plan">
+      <g class="draft">
+        <path pathLength="1" d="M40 300 H600"/>
+        <path pathLength="1" d="M150 300 V170 H490 V300"/>
+        <path pathLength="1" d="M120 178 L320 70 L520 178"/>
+        <path pathLength="1" d="M200 300 V220 H260 V300"/>
+        <path pathLength="1" d="M310 200 H450 V260 H310 Z M380 200 V260"/>
+        <path pathLength="1" d="M270 128 A50 14 0 1 0 370 128 A50 14 0 1 0 270 128"/>
+      </g>
+      <g class="dims">
+        <path d="M150 326 H490 M150 318 V334 M490 318 V334"/>
+        <text x="320" y="348" text-anchor="middle">MRB · PLAN → BUILD → FINISH</text>
+      </g>
+    </svg>
+    <div class="stamp">
+      <b>MRB</b>
+      <span>Construction Services</span>
+    </div>
+    <i class="roller"></i>
+  </div>
+  <button class="intro-skipbtn" type="button" id="skip">Skip &#8594;</button>
+</div>
+
+<!-- ============================================================ stage -->
+<main class="stage" id="stage">
+  <canvas id="scene" aria-label="A 3D construction site. Switch between four scenes: a ceiling with LED halo lighting, a kitchen with custom cabinetry, a house with blue reflective glass windows, and a house being roofed and painted."></canvas>
+  <div class="pins" id="pins"></div>
+  <div class="tip" id="tip" role="status"></div>
+  <div class="fallback" aria-hidden="true">
+    <svg viewBox="0 0 640 360"><g><path d="M40 300 H600 M150 300 V170 H490 V300 M120 178 L320 70 L520 178 M200 300 V220 H260 V300 M310 200 H450 V260 H310 Z M380 200 V260"/></g></svg>
+  </div>
+</main>
+
+<header class="brand">
+  <a class="brand-link" href="/" aria-label="MRB Construction Services, home">
+    <span class="mark" aria-hidden="true">MRB</span>
+    <span class="brand-txt"><b>MRB Construction</b><small>One-stop construction &amp; interior works</small></span>
+  </a>
+</header>
+
+<nav class="tabs" id="tabs" aria-label="Scenes"></nav>
+
+<section class="hero" id="hero" aria-live="polite">
+  <p class="eyebrow" id="hero-n"></p>
+  <h1 id="hero-h"></h1>
+  <p class="pitch" id="hero-p"></p>
+  <button class="hero-go" type="button" id="hero-go">Explore this service &#8594;</button>
+</section>
+
+<nav class="dock" aria-label="Main">
+  <button type="button" data-panel="services"><span>Services</span></button>
+  <button type="button" data-panel="projects"><span>Projects</span></button>
+  <button type="button" data-panel="about"><span>About</span></button>
+  <button type="button" data-panel="contact" class="cta"><span>Get a quote</span></button>
+</nav>
+<p class="hint" id="hint">Drag to look around &middot; click anything with a pin &middot; &#8592; &#8594; to switch scenes</p>
+
+<!-- =========================================================== drawer -->
+<aside class="drawer" id="drawer" role="dialog" aria-labelledby="d-title" aria-hidden="true">
+  <div class="drawer-head">
+    <p class="kicker" id="d-kicker"></p>
+    <h2 id="d-title"></h2>
+    <button class="x" type="button" id="d-close" aria-label="Close">&times;</button>
+  </div>
+  <div class="drawer-body" id="d-body"></div>
+</aside>
+
+<!-- ========================================================= lightbox -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Project photo" aria-hidden="true">
+  <button class="x" type="button" id="lb-close" aria-label="Close">&times;</button>
+  <figure>
+    <img id="lb-img" alt="">
+    <figcaption id="lb-cap"></figcaption>
+  </figure>
+</div>
+
+<noscript>
+  <style>.stage,.dock,.hint,.intro,.tabs,.hero{display:none}</style>
+  <div class="noscript">
+    <p><b>MRB Construction Services</b> — one-stop construction &amp; interior works.</p>
+    <p>Ceilings, cabinetry, glass, roofing, stainless steel, painting &amp; finishing, custom signages and rattan furniture.</p>
+    <p><a href="mailto:mrb.constructionteam@gmail.com">mrb.constructionteam@gmail.com</a> · 0955 607 6497 · 0932 702 4385</p>
+  </div>
+</noscript>
+
+</body>
+</html>
